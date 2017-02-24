@@ -62,7 +62,22 @@ class OptionsHouse:
 		instrumentId=1000000000450
 
 
-		post_data="<getDataForChartsAndVolatility><userId>"+str(user_id)+"</userId><studiesMaxPeriod>"+str(studiesMaxPeriod)+"</studiesMaxPeriod><frequency>"+str(frequency)+"</frequency><range>"+str(range_var)+"</range><retrieveVolatility>false</retrieveVolatility><includeExtendedHours>false</includeExtendedHours><instrumentId>"+str(instrumentId)+"</instrumentId><delayed>false</delayed><instrumentType>Equity</instrumentType><symbols><symbol>"+str(stock_symbol)+"</symbol><coefficient>1</coefficient><instrumentType>Equity</instrumentType></symbols></getDataForChartsAndVolatility>"
+		post_data="""<getDataForChartsAndVolatility>
+									<userId>"""+str(user_id)+"""</userId>
+									<studiesMaxPeriod>"""+str(studiesMaxPeriod)+"""</studiesMaxPeriod>
+									<frequency>"""+str(frequency)+"""</frequency>
+									<range>"""+str(range_var)+"""</range>
+									<retrieveVolatility>false</retrieveVolatility>
+									<includeExtendedHours>false</includeExtendedHours>
+									<instrumentId>"""+str(instrumentId)+"""</instrumentId>
+									<delayed>false</delayed>
+									<instrumentType>Equity</instrumentType>
+									<symbols>
+										<symbol>"""+str(stock_symbol)+"""</symbol>
+										<coefficient>1</coefficient>
+										<instrumentType>Equity</instrumentType>
+										</symbols>
+									</getDataForChartsAndVolatility>"""
 		post_data=post_data.encode('UTF-8')
 		r = urllib.request.Request("https://www.trademonster.com:443/services/chartsData", data=post_data, headers={'Content-Type': 'application/xml'})
 		u = urllib.request.urlopen(r)
@@ -87,14 +102,6 @@ class OptionsHouse:
 				open_price=float(self.stringBetween(response, "<open>", "</open>"))
 				#has +90 because ~90 characters after are junk, and this makes the program faster
 				response=response[response.find("</open>")+90:]
-
-				# temp_list=[]
-				# temp_list.append("")
-				# temp_list.append(open_price)
-				# temp_list.append(high)
-				# temp_list.append(low)
-				# temp_list.append(close)
-				# to_return.append(temp_list)
 
 				temp_list={}
 				temp_list['date']=""
@@ -175,14 +182,6 @@ class OptionsHouse:
 				open_price=float(self.stringBetween(response, "<open>", "</open>"))
 				#has +90 because ~90 characters after are junk, and this makes the program faster
 				response=response[response.find("</open>")+90:]
-
-				# temp_list=[]
-				# temp_list.append("")
-				# temp_list.append(open_price)
-				# temp_list.append(high)
-				# temp_list.append(low)
-				# temp_list.append(close)
-				# to_return.append(temp_list)
 
 				temp_list={}
 				temp_list['close']=close
